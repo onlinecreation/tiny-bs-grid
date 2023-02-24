@@ -26,7 +26,7 @@
     function Tinymce_bs3_grid() {
       var dialogueTitle = 'Insérer une grille';
       var columnValue = ['12'];
-      var screenSize = 'md';
+      var screenSize = 'sm';
       var node = editor.selection.getNode();
       var parentDOMS = jQuery(node).parents('div.row');
       var editMode = parentDOMS.length > 0;
@@ -116,9 +116,50 @@
         }
       ];
 
+      var advancedPanelItems = [
+        {
+          type: 'selectbox',
+          name: 'size',
+          label: '(Avancé) Point de rupture',
+          items: [{
+              text: 'Grand écran (>= 1200px)',
+              value: 'lg'
+            },
+            {
+              text: 'Écran de petit ordinateur (>= 992px)',
+              value: 'md'
+            },
+            {
+              text: 'Tablette (>= 768px)',
+              value: 'sm'
+            },
+            {
+              text: 'Téléphone (< 768px)',
+              value: 'xs'
+            },
+          ],
+        },
+        {
+          type: 'checkbox',
+          name: 'leadingBreak',
+          label: 'Ajouter un saut de ligne' + (editMode? '(recommandé)' : ''),
+        }
+      ];
+
+
+
       var panelBody = {
-        type: 'panel',
-        items: mainPanelItems
+        type: 'tabpanel',
+        tabs: [
+          {
+            title: 'Grille',
+            items: mainPanelItems
+          },
+          {
+            title: 'Paramètres avancés',
+            items: advancedPanelItems,
+          }
+        ]
       }
 
       if (editMode) {
@@ -130,35 +171,7 @@
             },
             {
               title: 'Paramètres avancés',
-              items: [
-                {
-                  type: 'selectbox',
-                  name: 'size',
-                  label: '(Avancé) Point de rupture',
-                  items: [{
-                      text: 'Grand écran (>= 1200px)',
-                      value: 'lg'
-                    },
-                    {
-                      text: 'Écran de petit ordinateur (>= 992px)',
-                      value: 'md'
-                    },
-                    {
-                      text: 'Tablette (>= 768px)',
-                      value: 'sm'
-                    },
-                    {
-                      text: 'Téléphone (< 768px)',
-                      value: 'xs'
-                    },
-                  ],
-                },
-                {
-                  type: 'checkbox',
-                  name: 'leadingBreak',
-                  label: 'Ajouter un saut de ligne' + (editMode? '(recommandé)' : ''),
-                },
-              ],
+              items: advancedPanelItems,
             },
             {
               title: 'Supprimer la grille',
