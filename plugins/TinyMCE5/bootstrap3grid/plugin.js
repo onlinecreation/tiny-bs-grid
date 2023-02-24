@@ -13,8 +13,8 @@
     editor.contentCSS.push(url + '/bootstrapgrid-style.css');
 
     editor.ui.registry.addToggleButton('bootstrap3grid', {
-      text: 'BS3 Grid',
-      tooltip: 'Bootstrap3 Grid System',
+      text: 'Colonnes',
+      tooltip: 'Système de grille',
       onAction: Tinymce_bs3_grid,
       onSetup: function (api) {
         editor.selection.selectorChanged('div.row', function (state) {
@@ -24,7 +24,7 @@
     });
 
     function Tinymce_bs3_grid() {
-      var dialogueTitle = 'Insert Bootstrap3 Grids';
+      var dialogueTitle = 'Insérer une grille';
       var columnValue = ['12'];
       var screenSize = 'md';
       var node = editor.selection.getNode();
@@ -60,85 +60,59 @@
             }
           }
         }
-        dialogueTitle = 'Update/Remove Bootstrap3 Grids';
+        dialogueTitle = 'Modifier/supprimer la grille';
       }
 
-      var mainPanelItems = [{
-          type: 'selectbox',
-          name: 'size',
-          label: 'Target Screen',
-          items: [{
-              text: 'Large => 1200px',
-              value: 'lg'
-            },
-            {
-              text: 'Medium => 992px',
-              value: 'md'
-            },
-            {
-              text: 'Small => 768px',
-              value: 'sm'
-            },
-            {
-              text: 'X Small < 768px',
-              value: 'xs'
-            },
-          ],
-        },
+      var mainPanelItems = [
         {
           type: 'selectbox',
           name: 'grid',
           label: 'Grid',
           items: [{
-              text: '1 Column',
+              text: '1 Colonne',
               value: '12'
             },
             {
-              text: '2 Columns (1:1)',
+              text: '2 Colonnes (½:½)',
               value: '6,6'
             },
             {
-              text: '2 Columns (2:1)',
+              text: '2 Colonnes (⅔:⅓)',
               value: '8,4'
             },
             {
-              text: '2 Columns (3:1)',
+              text: '2 Colonnes (¾:¼)',
               value: '9,3'
             },
             {
-              text: '2 Columns (1:2)',
+              text: '2 Colonnes (⅓:⅔)',
               value: '4,8'
             },
             {
-              text: '2 Columns (1:3)',
+              text: '2 Colonnes (¾:¼)',
               value: '3,9'
             },
             {
-              text: '3 Columns (1:1:1)',
+              text: '3 Colonnes (⅓:⅓:⅓)',
               value: '4,4,4'
             },
             {
-              text: '3 Columns (2:1:1)',
+              text: '3 Colonnes (½:¼:¼)',
               value: '6,3,3'
             },
             {
-              text: '3 Columns (1:2:1)',
+              text: '3 Colonnes (¼:½:¼)',
               value: '3,6,3'
             },
             {
-              text: '3 Columns (1:1:2)',
+              text: '3 Colonnes (¼:¼:½)',
               value: '3,3,6'
             },
             {
-              text: '4 Columns (1:1:1:1)',
+              text: '4 Colonnes (¼:¼:¼:¼)',
               value: '3,3,3,3'
             }
           ],
-        },
-        {
-          type: 'checkbox',
-          name: 'leadingBreak',
-          label: 'Add a Leading Line Break'
         }
       ];
 
@@ -151,15 +125,47 @@
         panelBody = {
           type: 'tabpanel',
           tabs: [{
-              title: 'Update Bootstrap Grids',
+              title: 'Modifier la grille',
               items: mainPanelItems
             },
             {
-              title: 'Remove Bootstrap Grids',
+              title: 'Paramètres avancés',
+              items: [
+                {
+                  type: 'selectbox',
+                  name: 'size',
+                  label: '(Avancé) Point de rupture',
+                  items: [{
+                      text: 'Grand écran (>= 1200px)',
+                      value: 'lg'
+                    },
+                    {
+                      text: 'Écran de petit ordinateur (>= 992px)',
+                      value: 'md'
+                    },
+                    {
+                      text: 'Tablette (>= 768px)',
+                      value: 'sm'
+                    },
+                    {
+                      text: 'Téléphone (< 768px)',
+                      value: 'xs'
+                    },
+                  ],
+                },
+                {
+                  type: 'checkbox',
+                  name: 'leadingBreak',
+                  label: 'Ajouter un saut de ligne' + (editMode? '(recommandé)' : ''),
+                },
+              ],
+            },
+            {
+              title: 'Supprimer la grille',
               items: [{
                 type: 'checkbox',
                 name: 'removeGrids',
-                label: 'Remove Bootstrap Grids',
+                label: 'Supprimer la grille',
               }]
             }
           ]
@@ -171,17 +177,18 @@
         body: panelBody,
         initialData: {
           size: screenSize,
-          grid: columnValue.toString()
+          grid: columnValue.toString(),
+          leadingBreak: (!editMode)
         },
         buttons: [{
             type: 'submit',
             name: 'submitBtn',
-            text: 'Submit',
+            text: (editMode ? 'Modifier' : 'Insérer'),
           },
           {
             type: 'cancel',
             name: 'cancelBtn',
-            text: 'Cancel',
+            text: 'Annuler',
           }
         ],
         onSubmit: function (e) {

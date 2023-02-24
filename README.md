@@ -1,4 +1,7 @@
 # tiny-bs-grid 
+
+> This is a french hack of the original plugin by jeffhehe, adapted for OnlineCreation.me. It has no added value from the original plugin, except that it is adapted to our needs.
+
 This plugin enables users to create or update Bootstrap (v3, v4) grid system within TinyMCE (v4, v5) editor. 
 
 There are 4 versions of this plugin customized for different combinations of TinyMCE (v4 or v5) and Bootstrap (v3 or v4).
